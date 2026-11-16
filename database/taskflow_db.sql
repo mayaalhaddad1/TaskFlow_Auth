@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 15, 2026 at 12:49 PM
+-- Generation Time: Nov 15, 2026 at 02:06 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -19,7 +19,9 @@ SET time_zone = "+00:00";
 
 --
 -- Database: `taskflow_db`
---
+CREATE DATABASE IF NOT EXISTS `taskflow_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `taskflow_db`;
+
 
 -- --------------------------------------------------------
 
@@ -51,13 +53,6 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `created_at`) VALUES
-(1, 'Maya Marwan', 'mayamarwan49@gmail.com', '$2y$10$iP1wyKN2yjNhyGo00MLg7O0KtqT87WSiFw9iH.zP3mmGVqWYuBmKG', '2026-11-15 10:37:41');
 
 --
 -- Indexes for dumped tables
@@ -92,6 +87,16 @@ ALTER TABLE `tasks`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `tasks`
+--
+ALTER TABLE `tasks`
+  ADD CONSTRAINT `fk_tasks_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
